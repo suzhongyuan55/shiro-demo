@@ -1,6 +1,7 @@
 package com.suzy.shiro.shirodemo.service;
 
 import com.suzy.shiro.shirodemo.enity.UserInfo;
+import com.suzy.shiro.shirodemo.vo.SaveUserVo;
 
 /**
  * @Author Suzy
@@ -9,4 +10,6 @@ import com.suzy.shiro.shirodemo.enity.UserInfo;
 public interface UserInfoService {
 
     UserInfo getUserInfo(Integer id);
+
+    String save(SaveUserVo request);
 }
