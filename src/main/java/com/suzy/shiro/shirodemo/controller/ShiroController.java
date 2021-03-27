@@ -1,13 +1,17 @@
 package com.suzy.shiro.shirodemo.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author Suzy
  * @Date 2021-03-27
  */
+@Slf4j
 @RestController
 public class ShiroController {
 
@@ -27,8 +31,19 @@ public class ShiroController {
         return "update...";
     }
 
-    @RequestMapping("/login")
-    private String toLogin(){
+    @PostMapping("/login")
+    private String toLogin(@RequestParam("userName") String userName, @RequestParam("password") String password){
+        // 获取当前用户
+        Subject subject = SecurityUtils.getSubject();
+        // 封装用户名和密码
+        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
+        try {
+            // 登录
+            subject.login(token);
+        } catch (Exception e) {
+            log.error("失败");
+        }
+
         return "login...";
     }
 }
