@@ -1,6 +1,7 @@
 server:
   port: 9000
 
+
 spring:
   thymeleaf:
     mode: HTML5
@@ -17,6 +18,8 @@ spring:
     minIdle: 5
     maxActive: 20
     maxWait: 60000
+server:
+  port: 9000
 
 # MybatisPlus
 mybatis-plus:
