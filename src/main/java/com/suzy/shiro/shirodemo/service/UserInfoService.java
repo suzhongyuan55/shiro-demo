@@ -1,9 +1,9 @@
 package com.suzy.shiro.shirodemo.service;
 
 import com.suzy.shiro.shirodemo.enity.UserInfo;
-import com.suzy.shiro.shirodemo.vo.DeleteUserVo;
-import com.suzy.shiro.shirodemo.vo.SaveUserVo;
-import com.suzy.shiro.shirodemo.vo.UpdateUserVo;
+import com.suzy.shiro.shirodemo.vo.*;
+
+import java.util.List;
 
 /**
  * @Author Suzy
@@ -18,4 +18,11 @@ public interface UserInfoService {
     String update(UpdateUserVo a);
 
     String delete(DeleteUserVo b);
+
+    /**
+     * 获取所有用户信息
+     * @return
+     * @param c
+     */
+    AllUserPageVo all(SelectNameVO c);
 }

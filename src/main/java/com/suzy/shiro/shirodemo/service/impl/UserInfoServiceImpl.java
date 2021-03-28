@@ -1,15 +1,16 @@
 package com.suzy.shiro.shirodemo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.suzy.shiro.shirodemo.dao.UserInfoDao;
 import com.suzy.shiro.shirodemo.enity.UserInfo;
 import com.suzy.shiro.shirodemo.service.UserInfoService;
-import com.suzy.shiro.shirodemo.vo.DeleteUserVo;
-import com.suzy.shiro.shirodemo.vo.SaveUserVo;
-import com.suzy.shiro.shirodemo.vo.UpdateUserVo;
+import com.suzy.shiro.shirodemo.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Author Suzy
@@ -57,6 +58,24 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfo.setUserId(b.getId());
         userInfo.deleteById();
         return "成功";
+    }
+
+    @Override
+    public AllUserPageVo all(SelectNameVO c) {
+        List<UserInfo> userInfos = userInfoDao.selectList(new QueryWrapper<UserInfo>()
+                .like("user_name", c.getUserName()).like("real_name", c.getRealName())
+                // limit 3,3
+                .last("limit " + c.getLimit() + "," + c.getSize()));
+        Integer count = userInfoDao.selectCount(new QueryWrapper<UserInfo>()
+                .like("user_name", c.getUserName()).like("real_name", c.getRealName()));
+
+        // 设置对象返回
+        AllUserPageVo result = new AllUserPageVo();
+        result.setPage(c.getPage());
+        result.setSize(c.getSize());
+        result.setCount(count);
+        result.setData(userInfos);
+        return result;
     }
 
 }
