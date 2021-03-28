@@ -1,5 +1,6 @@
 package com.suzy.shiro.shirodemo.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +13,7 @@ import java.util.Map;
  * @Author Suzy
  * @Date 2021-03-27
  */
+@Slf4j
 @Configuration
 public class ShiroConfig {
 
@@ -32,13 +34,17 @@ public class ShiroConfig {
          * user：必须拥有 记住我 功能才能访问
          * perms：拥有对某个资源的权限才能访问
          */
+        // 拦截map
         Map<String, String> filterDefinitionMap = new LinkedHashMap<>();
-        filterDefinitionMap.put("/add", "authc");
-        filterDefinitionMap.put("/update", "authc");
+
+        // 设置权限
+        filterDefinitionMap.put("/user/save", "perms[user:save]");
+        filterDefinitionMap.put("/user/get", "perms[user:get]");
         bean.setFilterChainDefinitionMap(filterDefinitionMap);
 
+        // 设置登录请求
         bean.setLoginUrl("/login");
-
+        log.info(" ==> 执行了授权认证操作");
         return bean;
     }
 

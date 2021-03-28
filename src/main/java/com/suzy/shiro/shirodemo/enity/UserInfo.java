@@ -24,8 +24,16 @@ public class UserInfo extends Model<UserInfo> {
 
     private String userName;
 
+    private String password;
+
+    private String realName;
+
     private Date createTime;
 
     private Date updateTime;
+
+    private Integer status;
+
+    private String perms;
 
 }
